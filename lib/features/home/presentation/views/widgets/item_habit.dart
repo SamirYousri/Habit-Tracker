@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habit_tracker/core/widgets/custom_check_box.dart';
+import 'package:habit_tracker/features/home/data/models/habit_model.dart';
 
 class ItemHabit extends StatelessWidget {
   const ItemHabit({super.key});

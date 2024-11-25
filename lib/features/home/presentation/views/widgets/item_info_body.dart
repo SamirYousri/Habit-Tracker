@@ -12,6 +12,7 @@ class ItemInfoBody extends StatefulWidget {
 class _ItemInfoBodyState extends State<ItemInfoBody> {
   int currentIndex = 0;
   late PageController controller = PageController();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
