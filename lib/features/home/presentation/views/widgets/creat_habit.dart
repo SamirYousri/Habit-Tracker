@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:habit_tracker/core/widgets/custom_button.dart';
 import 'package:habit_tracker/features/home/data/local_date_source/local_date_source.dart';
 import 'package:habit_tracker/features/home/data/models/habit_model.dart';
+import 'package:habit_tracker/features/home/presentation/views/home_view.dart';
 
 import 'package:habit_tracker/features/home/presentation/views/widgets/page_view_item_info.dart';
 
@@ -24,7 +25,7 @@ class _CreatHabitState extends State<CreatHabit> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Habit Tracker',
+            'Creat Habit',
             style: TextStyle(
               fontSize: 20,
               // color: Colors.blue,
@@ -37,12 +38,16 @@ class _CreatHabitState extends State<CreatHabit> {
               child: CustomButton(
                   onTap: () async {
                     final newHabit = HabitModel(
-                      description: descriptionController.text,
                       title: titleController.text,
-                      id: DateTime.now().millisecondsSinceEpoch,
+                      description: descriptionController.text,
                     );
                     await localDateSource.addHabit(newHabit);
-                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const HomeView();
+                      },
+                    ));
+                    // Navigator.pop(context);
                   },
                   hight: 40,
                   width: 60,

@@ -11,7 +11,7 @@ class ItemInfo extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Habit Tracker',
+            'Edit Habit',
             style: TextStyle(
               fontSize: 20,
               // color: Colors.blue,

@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 class LocalDateSource {
   Future<void> addHabit(HabitModel habitModel) async {
     var box = Hive.box<HabitModel>('habit');
-    await box.put(habitModel.id, habitModel);
+    await box.add(habitModel);
   }
 
   List<HabitModel> getAllHabit() {
@@ -12,8 +12,8 @@ class LocalDateSource {
     return box.values.toList();
   }
 
-  Future<void> deleteHabit(int id) async {
+  Future<void> deleteHabit(int index) async {
     var box = Hive.box<HabitModel>('habit');
-    await box.deleteAt(id);
+    await box.deleteAt(index);
   }
 }

@@ -18,79 +18,96 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   void initState() {
     super.initState();
-    habits = localDateSource.getAllHabit();
+    _loadHabits();
+  }
+
+  Future<void> _loadHabits() async {
+    setState(() {
+      habits = localDateSource.getAllHabit();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: habits.length,
-      itemBuilder: (context, index) {
-        final habit = habits[index];
-        return GestureDetector(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return const ItemInfo();
-                },
-              ));
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(
-                right: 16,
-                left: 16,
-                top: 10,
-              ),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        contentPadding: const EdgeInsets.all(0),
-                        title: Text(
-                          habit.title,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        subtitle: Text(
-                          habit.description,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        trailing: const CustomCheckBox(
-                          isActive: false,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            '3 / 5   in weeks',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+    return habits.isEmpty
+        ? const Center(
+            child: Text(
+            'Enter your habits',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
+            ),
+          ))
+        : ListView.builder(
+            itemCount: habits.length,
+            itemBuilder: (context, index) {
+              final habit = habits[index];
+              return GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const ItemInfo();
+                      },
+                    ));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      right: 16,
+                      left: 16,
+                      top: 10,
+                    ),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListTile(
+                              contentPadding: const EdgeInsets.all(0),
+                              title: Text(
+                                habit.title,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text(
+                                habit.description,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              trailing: const CustomCheckBox(
+                                isActive: false,
+                              ),
                             ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              localDateSource.deleteHabit(habit.id);
-                            },
-                            icon: const Icon(Icons.delete),
-                          ),
-                        ],
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  '3 / 5   in weeks',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () async {
+                                    await localDateSource.deleteHabit(index);
+                                    await _loadHabits();
+                                  },
+                                  icon: const Icon(Icons.delete),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            ));
-      },
-    );
+                    ),
+                  ));
+            },
+          );
   }
 }

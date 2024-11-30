@@ -8,7 +8,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(HabitModelTypeAdapter());
-  Hive.openBox<HabitModel>('habit');
+  await Hive.openBox<HabitModel>('habit');
   runApp(const HabitTracker());
 }
 

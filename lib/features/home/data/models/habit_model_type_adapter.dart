@@ -7,7 +7,6 @@ class HabitModelTypeAdapter extends TypeAdapter<HabitModel> {
     return HabitModel(
       title: reader.readString(),
       description: reader.readString(),
-      id: reader.readInt(),
     );
   }
 
@@ -18,6 +17,5 @@ class HabitModelTypeAdapter extends TypeAdapter<HabitModel> {
   void write(BinaryWriter writer, HabitModel obj) {
     writer.writeString(obj.title);
     writer.writeString(obj.description);
-    writer.writeInt(obj.id);
   }
 }
